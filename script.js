@@ -26,10 +26,17 @@ const questions = [{
 function renderQuestion() {
     const question = questions[index];
     questionheader.textContent = question.name;
+    choice1.textContent = question.options[0];
+    choice2.textContent = question.options[1];
+    choice3.textContent = question.options[2];
+    choice4.textContent = question.options[3];
 }
+questiondiv.addEventListener("click", function() {
 
-startbutton.addEventListener("click", function () {
+});
+
+startbutton.addEventListener("click", function() {
     startdiv.classList.add("hidden")
     questiondiv.classList.remove("hidden")
-    questionheader.textContent = "What is the GitHub command to add a file?"
-}) 
+    renderQuestion(); 
+}); 
