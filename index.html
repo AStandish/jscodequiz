@@ -1,43 +1,37 @@
 <!DOCTYPE html>
 <html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="./style.css" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./style.css" rel="stylesheet" />
     <title>Document</title>
-</head>
+  </head>
 
-<body>
+  <body>
     <div id="startdiv">
-        <h1>Welcome to Code Quiz</h1>
-        <button id="startbutton">Start Quiz</button>
+      <h1>Welcome to Code Quiz</h1>
+      <button id="startbutton">Start Quiz</button>
     </div>
-    <div id="timer">
-        
-    </div>
-    <div id="questiondiv" class="hidden">
-        <h2 id="questionheader"></h2>
-        <button id="choice1" data-choice="0"></button><br>
-        <button id="choice2" data-choice="1"></button><br>
-        <button id="choice3" data-choice="2"></button><br>
-        <button id="choice4" data-choice="3"></button><br>
+    <div id="timer"></div>
+    <div id="questiondiv" class="highlight hidden">
+      <h2 id="questionheader"></h2>
+      <button id="choice1" data-choice="0"></button><br />
+      <button id="choice2" data-choice="1"></button><br />
+      <button id="choice3" data-choice="2"></button><br />
+      <button id="choice4" data-choice="3"></button><br />
     </div>
     <div id="formdiv" class="hidden">
-        <h2>Quiz is complete</h2>
-        <input>
-        <button>Save Score</button>
-
+      <h2>Quiz is complete</h2>
+      <input />
+      <button>Save Score</button>
     </div>
     <div id="scorediv" class="hidden">
-        <h2>High Scores</h2> 
-        <ul> 
-            <li>AS: 20</li>
-
-        </ul>
+      <h2>High Scores</h2>
+      <ul>
+        <li>AS: 20</li>
+      </ul>
     </div>
-</body>
-<script src="./script.js"></script>
-
+  </body>
+  <script src="./script.js"></script>
 </html>
