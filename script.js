@@ -9,8 +9,13 @@ const choice2 = document.getElementById("choice2");
 const choice3 = document.getElementById("choice3");
 const choice4 = document.getElementById("choice4");
 const timerDisplay = document.getElementById("timer");
+const saveButton = document.getElementById("saveButton");
+const initials = document.getElementById("initials");
 let index = 0;
 let timer = 60;
+let interval;
+let secondsElapsed = 0;
+let timeIntervalHandler;
 
 const questions = [
   {
@@ -30,23 +35,29 @@ const questions = [
   },
 ];
 
-function setTime() {
-  // Sets interval in variable
-  let timerInterval = setInterval(function () {
-    timer--;
-    timerDisplay.text.Content = timer;
+//starts and updates timer
 
-    if (timer === 0) {
-      // Stops execution of action at set interval
-      clearInterval(timerInterval);
-      // Calls function to create and append image
-      sendMessage();
+function startTimer() {
+  timeIntervalHandler = setInterval(function () {
+    if (timer <= 0) {
+      clearInterval(timerDisplay);
     }
+    timer--;
+
+    timerDisplay.textContent = timer;
   }, 1000);
 }
 
+startbutton.addEventListener("click", function () {
+  startdiv.classList.add("hidden");
+  questiondiv.classList.remove("hidden");
+  renderQuestion();
+  startTimer();
+});
+
 function renderQuestion() {
-  timerDisplay.innerHTML = timer;
+  //  timerDisplay.textContent = timer;
+
   if (index < questions.length) {
     const question = questions[index];
     questionheader.textContent = question.name;
@@ -62,36 +73,66 @@ function renderQuestion() {
 }
 
 questiondiv.addEventListener("click", function (event) {
-  question = event.target;
-  const chosenAnswer = event.target.getAttribute("data-choice");
-  const expectedAnswer = document
-    .getElementById("questionheader")
-    .getAttribute("data-answer");
+  const answerButtonClicked = event.target;
 
-  if (chosenAnswer && chosenAnswer === expectedAnswer) {
+  if (answerButtonClicked.matches("button")) {
+    const chosenAnswer = answerButtonClicked.getAttribute("data-choice");
+    const expectedAnswer = document
+      .getElementById("questionheader")
+      .getAttribute("data-answer");
+
+    if (chosenAnswer !== expectedAnswer) {
+      // decrease the timer value by 5
+      timer -= 5;
+      timerDisplay.innerHTML = timer;
+    }
+
     index++;
-    renderQuestion();
-  } else {
-    // decrease the timer value by whatever
-    timer -= 5;
-    timerDisplay.innerHTML = timer;
+
+    if (index < questions.length) {
+      renderQuestion();
+    } else {
+      questiondiv.classList.add("hidden");
+      formdiv.classList.remove("hidden");
+    }
   }
 });
 
-startbutton.addEventListener("click", function () {
-  startdiv.classList.add("hidden");
-  questiondiv.classList.remove("hidden");
-  renderQuestion();
+saveButton.addEventListener("click", function (event) {
+  event.preventDefault();
+  if (!initials.value) {
+    alert("Please enter your initials before pressing submit!");
+    return;
+  }
+  let highScores = [];
+  const highScoresStr = localStorage.getItem("highScores");
+  if (highScoresStr) {
+    highScores = JSON.parse(highScoresStr);
+  }
+  const scoreItem = {
+    score: 0, //needs to calculate answers
+    initials: initials.value,
+  };
+  highScores.push(scoreItem);
+  highScores.sort(function (a, b) {
+    b.score - a.score;
+  });
+
+  localStorage.setItem("highScores", JSON.stringify(highScores));
+  //window.location.assign("highscores.html"); this page needs to be created
 });
+
+function renderHighScore() {
+  scoreItem = JSON.parse(localStorage.getItem("highscoreForPlayer"));
+  for (let i = 0; i < highScores.length; i++) {
+    scoreItem = document.createElement("scorediv");
+    console.log(scoreItem);
+  }
+}
 
 // TODO for localStorage
 // set empty array in LS ONLY IF there is no array in LS with that name
 // when game is over, get the array from LS with the name of Highscore
 // push a object in the array with a key of the name of the player and a value of the highscore
-
-// const higscoreForPlaye = {
-//   name: "Peter",
-//   score: 23,
-// };
 
 // AFTER this, just set the new array with the latest highscore added, into the LS overwriting the older one
